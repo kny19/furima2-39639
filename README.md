@@ -25,72 +25,68 @@ Things you may want to cover:
 
 # データベース設計
 
-## ユーザー情報 (user):
+## ユーザー情報 (users):
 
 | Column      | Type    | Options                   |
 |-------------|---------|--------------------------|
-| user_id     | integer | primary key, not null    |
-| username    | string  | not null                 |
-| email       | string  | not null                 |
-| password    | string  | not null                 |
-| address     | string  |                          |
-| created_at  | datetime| not null                 |
+| user_id     | integer | primary key, null: false    |
+| username    | string  | null: false                 |
+| email       | string  | null: false                 |
+| password    | string  | null: false                 |
+| address     | string  |                             |
+| created_at  | datetime| null: false                 |
 
-## 商品情報 (item):
+## 商品情報 (items):
 
 | Column        | Type    | Options                   |
 |---------------|---------|--------------------------|
-| item_id       | integer | primary key, not null    |
-| seller_user_id| integer | foreign key, not null    |
-| item_name     | string  | not null                 |
-| description   | string  | not null                 |
-| price         | integer | not null                 |
-| condition     | string  |                          |
-| category_id   | integer | foreign key              |
-| image_id      | integer | foreign key              |
-| created_at    | datetime| not null                 |
+| item_id       | integer | primary key, null: false    |
+| user　　　　　　| integer | foreign key, null: false    |
+| item_name     | string  | null: false                 |
+| description   | string  | null: false                 |
+| price         | integer | null: false                 |
+| condition     | string  |                             |
+| category_id   | integer | null: false                 |
+| image_id      | integer | foreign key                 |
 
-## 見た目の情報 (image):
+
+## 分類する情報 (categorys):
+
+| Column      | Type    | Options                     |
+|-------------|---------|--------------------------|
+| category_id | integer | primary key, null: false    |
+| category_name|string  | null: false                 |
+
+## コメント情報 (comments):
 
 | Column      | Type    | Options                   |
 |-------------|---------|--------------------------|
-| image_id    | integer | primary key, not null    |
-| image_url   | string  |                          |
+| comment_id  | integer | primary key, null: false    |
+| item_id     | integer | foreign key, null: false    |
+| user_id     | integer | foreign key, null: false    |
+| content     | string  | null: false                 |
+| created_at  | datetime| null: false                 |
 
-## 分類する情報 (category):
 
-| Column      | Type    | Options                   |
-|-------------|---------|--------------------------|
-| category_id | integer | primary key, not null    |
-| category_name|string  | not null                 |
+## 購入者情報 (purchases):
 
-## コメント情報 (comment):
+| Column          | Type    | Options                   |
+|---------------- |---------|--------------------------|
+| purchase_id     | integer | primary key, null: false    |
+| item_id         | integer | foreign key, null: false    |
+| buyer_user_id   | integer | foreign key, null: false    |
+| purchase_date   | datetime| null: false                 |
+| shipping_address| integer | foreign key, null: false    |
+| total_amount    | integer | null: false                 |
 
-| Column      | Type    | Options                   |
-|-------------|---------|--------------------------|
-| comment_id  | integer | primary key, not null    |
-| item_id     | integer | foreign key, not null    |
-| user_id     | integer | foreign key, not null    |
-| content     | string  | not null                 |
-| created_at  | datetime| not null                 |
 
-## カード情報 (card):
-
-| Column      | Type    | Options                   |
-|-------------|---------|--------------------------|
-| card_id     | integer | primary key, not null    |
-| user_id     | integer | foreign key, not null    |
-| card_number | string  | not null                 |
-| expiration_date | string| not null                 |
-| cvv         | string  | not null                 |
-
-## 購入者情報 (purchase):
+## 配送先テーブル (shipping_address):
 
 | Column         | Type    | Options                   |
 |----------------|---------|--------------------------|
-| purchase_id    | integer | primary key, not null    |
-| item_id        | integer | foreign key, not null    |
-| buyer_user_id  | integer | foreign key, not null    |
-| purchase_date  | datetime| not null                 |
-| shipping_address|string  |                          |
-| total_amount   | integer |                          |
+| shipping_address_id    | integer | primary key, null: false    |
+| user_id                | integer | foreign key, null: false    |
+| recipient_name         | string  | null: false                 |
+| postal_code            | string  | null: false                 |
+| address                | string  | null: false                 |
+| created_at             | datetime| null: false                 |
