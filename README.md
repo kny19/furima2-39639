@@ -50,17 +50,17 @@ has_many :purchases, dependent: :destroy
 
 ## 商品情報 (items):
 
-| Column         | Type       | Options                          |
-|----------------|------------|----------------------------------|
-| item_name      | string     | null: false                      |
-| price          | integer    | null: false                      |
-| description    | text       | null: false                      |
-| category_id    | integer    | null: false                      |
-| condition_id   | integer    | null: false                      |
-| shipping_burden| integer    | null: false                      |
-| shipping_area  | integer    | null: false                      |
-| shipping_days  | integer    | null: false                      |
-| user           | references | foreign key, null: false         |
+| Column             | Type       | Options                          |
+|--------------------|------------|----------------------------------|
+| item_name          | string     | null: false                      |
+| price              | integer    | null: false                      |
+| description        | text       | null: false                      |
+| category_id        | integer    | null: false                      |
+| condition_id       | integer    | null: false                      |
+| shipping_burden_id | integer    | null: false                      |
+| shipping_area_id   | integer    | null: false                      |
+| shipping_day_id    | integer    | null: false                      |
+| user               | references | foreign key, null: false         |
 
 ### アソシエーション:
 # 商品は1人のユーザーに所属するので、多対1の関係
@@ -75,8 +75,8 @@ has_one :purchase, dependent: :destroy
 
 | Column          | Type        | Options                     |
 |---------------- |-------------|-----------------------------|
-| user            | Foreign Key | foreign key, null: false    |
-| item            | Foreign Key | foreign key, null: false    |
+| user            | references  | foreign key, null: false    |
+| item            | references  | foreign key, null: false    |
 
 ### アソシエーション:
 # 購入管理情報は1つのユーザーに所属するので、多対1の関係
@@ -86,7 +86,7 @@ belongs_to :user
 belongs_to :item
 
 # 購入管理情報は1つの配送先に所属するので、多対1の関係
-belongs_to :shipping_address
+has_one :shipping_address
 
 
 
@@ -96,7 +96,7 @@ belongs_to :shipping_address
 | Column                 | Type         | Options                     |
 |------------------------|--------------|-----------------------------|
 | postal_code            | string       | null: false                 |
-| prefecture             | integer      | primary key, null: false    |
+| prefecture_id          | integer      | primary key, null: false    |
 | city                   | string       | null: false                 |
 | street_address         | string       | null: false                 |
 | building_name          | string       |                             |
