@@ -1,65 +1,72 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
+  before do
+    @item = build(:item)
+  end
+
   describe "validations" do
-    it "is valid with valid attributes" do
-      item = build(:item)
-      expect(item).to be_valid
+    context '正常系' do
+      it '有効な属性値の場合、有効であること' do
+        expect(@item).to be_valid
+      end
     end
 
-    it "is not valid without an item_name" do
-      item = build(:item, item_name: nil)
-      expect(item).not_to be_valid
-    end
+    context '異常系' do
+      it '商品名がない場合、無効であること' do
+        @item.item_name = nil
+        expect(@item).not_to be_valid
+      end
 
-    it "is not valid without a price" do
-      item = build(:item, price: nil)
-      expect(item).not_to be_valid
-    end
+      it '価格がない場合、無効であること' do
+        @item.price = nil
+        expect(@item).not_to be_valid
+      end
 
-    it "is not valid with a non-integer price" do
-      item = build(:item, price: "abc")
-      expect(item).not_to be_valid
-    end
+      it '価格が整数でない場合、無効であること' do
+        @item.price = "abc"
+        expect(@item).not_to be_valid
+      end
 
-    it "is not valid with a price less than or equal to 0" do
-      item = build(:item, price: 0)
-      expect(item).not_to be_valid
-    end
+      it '価格が0以下の場合、無効であること' do
+        @item.price = 0
+        expect(@item).not_to be_valid
+      end
 
-    it "is not valid without a description" do
-      item = build(:item, description: nil)
-      expect(item).not_to be_valid
-    end
+      it '説明がない場合、無効であること' do
+        @item.description = nil
+        expect(@item).not_to be_valid
+      end
 
-    it "is not valid without a category" do
-      item = build(:item, category: nil)
-      expect(item).not_to be_valid
-    end
+      it 'カテゴリーがない場合、無効であること' do
+        @item.category = nil
+        expect(@item).not_to be_valid
+      end
 
-    it "is not valid without a condition" do
-      item = build(:item, condition: nil)
-      expect(item).not_to be_valid
-    end
+      it '商品の状態がない場合、無効であること' do
+        @item.condition = nil
+        expect(@item).not_to be_valid
+      end
 
-    it "is not valid without a shipping_burden" do
-      item = build(:item, shipping_burden: nil)
-      expect(item).not_to be_valid
-    end
+      it '配送料の負担がない場合、無効であること' do
+        @item.shipping_burden = nil
+        expect(@item).not_to be_valid
+      end
 
-    it "is not valid without a shipping_area" do
-      item = build(:item, shipping_area: nil)
-      expect(item).not_to be_valid
-    end
+      it '発送元の地域がない場合、無効であること' do
+        @item.shipping_area = nil
+        expect(@item).not_to be_valid
+      end
 
-    it "is not valid without a shipping_day" do
-      item = build(:item, shipping_day: nil)
-      expect(item).not_to be_valid
-    end
+      it '発送までの日数がない場合、無効であること' do
+        @item.shipping_day = nil
+        expect(@item).not_to be_valid
+      end
 
-    it "is not valid without an item_image" do
-      item = build(:item, item_image: nil)
-      expect(item).not_to be_valid
+      it '商品画像がない場合、無効であること' do
+        @item.item_image = nil
+        expect(@item).not_to be_valid
+      end
     end
   end
 
