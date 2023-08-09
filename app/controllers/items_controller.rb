@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
-  #before_action :authenticate_user!, only: [:new, :create]  # ログイン状態のユーザーのみ new と create にアクセスできる
+  before_action :authenticate_user!, only: [:new, :create]  # ログイン状態のユーザーのみ new と create にアクセスできる
 
   def index
-    @items = Item.all
+    #@items = Item.all
   end
 
   def new
