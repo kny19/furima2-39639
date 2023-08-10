@@ -10,12 +10,12 @@ class Item < ApplicationRecord
   
   validates :item_name, presence: true
   validates :description, presence: true
-  validates :category_id, presence: true
-  validates :condition_id, presence: true
-  validates :shipping_burden_id, presence: true
-  validates :shipping_area_id, presence: true
-  validates :shipping_day_id, presence: true
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
+  validates :category_id, presence: true, numericality: { other_than: 1 }
+  validates :condition_id, presence: true, numericality: { other_than: 1 }
+  validates :shipping_burden_id, presence: true, numericality: { other_than: 1 }
+  validates :shipping_area_id, presence: true, numericality: { other_than: 1 }
+  validates :shipping_day_id, presence: true, numericality: { other_than: 1 }
+  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
   validates :item_image, presence: true
   
   has_one_attached :item_image

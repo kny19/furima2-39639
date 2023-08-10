@@ -32,33 +32,33 @@ RSpec.describe Item, type: :model do
       end
 
       it 'カテゴリーの情報が空では登録できない' do
-        @item.category_id = ''
+        @item.category_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Category can't be blank")
+        expect(@item.errors.full_messages).to include("Category must be other than 1")
       end
 
-      it '商品の状態の情報がが空では登録できない' do
-        @item.condition_id = ''
+      it '商品の状態の情報が空では登録できない' do
+        @item.condition_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Condition can't be blank")
+        expect(@item.errors.full_messages).to include("Condition must be other than 1")
       end
 
       it '配送料の負担の情報が空では登録できない' do
-        @item.shipping_burden_id = ''
+        @item.shipping_burden_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping burden can't be blank")
+        expect(@item.errors.full_messages).to include("Shipping burden must be other than 1")
       end
 
       it '発送元の地域の情報が空では登録できない' do
-        @item.shipping_area_id = ''
+        @item.shipping_area_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping area can't be blank")
+        expect(@item.errors.full_messages).to include("Shipping area must be other than 1")
       end
 
       it '発送までの日数の情報が空では登録できない' do
-        @item.shipping_day_id = ''
+        @item.shipping_day_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping day can't be blank")
+        expect(@item.errors.full_messages).to include("Shipping day must be other than 1")
       end
 
       it '価格の情報が空では登録できない' do
