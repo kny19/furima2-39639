@@ -1,16 +1,11 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_item, only: :index
 
   def index
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @purchase_form = PurchaseShippingAddress.new
-    @item = Item.find(params[:item_id])
-    return redirect_to root_path if current_user == @item.user||@item.purchase != nil
-  end
-
-  def new
-    @item = Item.find(params[:item_id])
-    @purchase_form = PurchaseShippingAddress.new
+    return redirect_to root_path if @item_already_purchased
   end
 
   def create
@@ -18,7 +13,6 @@ class PurchasesController < ApplicationController
     @purchase_form.user_id = current_user.id
     @item = Item.find(params[:item_id]) # Add this line to ensure @item is defined
     if @purchase_form.valid?
-      Payjp.api_key = "sk_test_bc1473de0c2e1cec92a025e0"  # 自身のPAY.JPテスト秘密鍵を記述しましょう
       Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
       Payjp::Charge.create(
         amount: @item.price,
@@ -38,6 +32,11 @@ class PurchasesController < ApplicationController
   end
 
   private
+
+  def set_item
+    @item = Item.find(params[:item_id])
+    @item_already_purchased = current_user == @item.user || @item.purchase.present?
+  end
 
   def purchase_shipping_address_params
     params.require(:purchase_shipping_address).permit(

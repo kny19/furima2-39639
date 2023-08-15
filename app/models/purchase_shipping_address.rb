@@ -3,11 +3,15 @@ class PurchaseShippingAddress
   attr_accessor :postal_code, :shipping_area_id, :city, :street_address, :building_name, :phone_number, :item_id, :user_id, :token
 
   validates :postal_code, presence: true, format: { with: /\A\d{3}-\d{4}\z/, message: 'is invalid. Include hyphen(-)' }
-  validates :shipping_area_id, presence: true
-  validates :city, presence: true
-  validates :street_address, presence: true
-  validates :phone_number, presence: true, format: { with: /\A\d{10,11}\z/, message: 'is invalid' }
-  validates :token, presence: true
+  validates :shipping_area_id, presence: true, numericality: { other_than: 1 }
+  with_options presence: true do
+  validates :city
+  validates :item_id
+  validates :user_id
+  validates :street_address
+  validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'is invalid' }
+  validates :token
+  end
 
   def save
 

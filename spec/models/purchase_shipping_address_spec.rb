@@ -61,6 +61,42 @@ RSpec.describe PurchaseShippingAddress, type: :model do
         @purchase_shipping_address.valid?
         expect(@purchase_shipping_address.errors.full_messages).to include("Phone number is invalid")
       end
+
+      it 'shipping_area_idが「---」の場合は保存できないこと' do
+        @purchase_shipping_address.shipping_area_id = nil
+        @purchase_shipping_address.valid?
+        expect(@purchase_shipping_address.errors.full_messages).to include("Shipping area can't be blank")
+      end
+
+      it 'phone_numberが9桁以下では保存できないこと' do
+        @purchase_shipping_address.phone_number = '123456789'
+        @purchase_shipping_address.valid?
+        expect(@purchase_shipping_address.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it 'phone_numberが12桁以上では保存できないこと' do
+        @purchase_shipping_address.phone_number = '123456789012'
+        @purchase_shipping_address.valid?
+        expect(@purchase_shipping_address.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it 'tokenが空では保存できないこと' do
+        @purchase_shipping_address.token = nil
+        @purchase_shipping_address.valid?
+        expect(@purchase_shipping_address.errors.full_messages).to include("Token can't be blank")
+      end
+
+      it 'userが紐付いていなければ保存できないこと' do
+        @purchase_shipping_address.user_id = nil
+        @purchase_shipping_address.valid?
+        expect(@purchase_shipping_address.errors.full_messages).to include("User can't be blank")
+      end
+
+      it 'itemが紐付いていなければ保存できないこと' do
+        @purchase_shipping_address.item_id = nil
+        @purchase_shipping_address.valid?
+        expect(@purchase_shipping_address.errors.full_messages).to include("Item can't be blank")
+      end
     end
   end
 end
