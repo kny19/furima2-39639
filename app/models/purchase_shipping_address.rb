@@ -3,8 +3,8 @@ class PurchaseShippingAddress
   attr_accessor :postal_code, :shipping_area_id, :city, :street_address, :building_name, :phone_number, :item_id, :user_id, :token
 
   with_options presence: true do
-  validates :postal_code, presence: true, format: { with: /\A\d{3}-\d{4}\z/, message: 'is invalid. Include hyphen(-)' }
-  validates :shipping_area_id, presence: true, numericality: { other_than: 1 }
+  validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/, message: 'is invalid. Include hyphen(-)' }
+  validates :shipping_area_id, numericality: { other_than: 1 }
   validates :city
   validates :item_id
   validates :user_id
