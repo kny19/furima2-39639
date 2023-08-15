@@ -11,7 +11,6 @@ class PurchasesController < ApplicationController
   def create
     @purchase_form = PurchaseShippingAddress.new(purchase_shipping_address_params)
     @purchase_form.user_id = current_user.id
-
     if @purchase_form.valid?
       Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
       Payjp::Charge.create(
@@ -22,6 +21,7 @@ class PurchasesController < ApplicationController
        @purchase_form.save
       redirect_to root_path, notice: '購入が完了しました。'
     else
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       render :index, status: :unprocessable_entity
     end
   end
