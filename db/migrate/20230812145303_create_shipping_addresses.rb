@@ -1,4 +1,4 @@
-class CreateShippingaddresses < ActiveRecord::Migration[7.0]
+class CreateShippingAddresses < ActiveRecord::Migration[7.0]
   def change
     create_table   :shipping_addresses do |t|
       t.string     :postal_code,      null: false
